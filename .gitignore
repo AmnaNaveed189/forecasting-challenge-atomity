@@ -1,4 +1,54 @@
-*.egg-info/
-.venv/
-.pytest_cache/
+# Python bytecode and caches
 __pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Packaging and build output
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.conda/
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# Dataset: the upstream Azure release is downloaded, never committed
+challenge_data/
+*.csv.gz
+
+# Large derived or intermediate files
+*.parquet
+*.feather
+*.pkl
+*.pickle
+*.joblib
+*.npy
+*.npz
+data/processed/
+artifacts/
+tmp/
+
+# Secrets and credentials
+.env
+.env.*
+*.pem
+*.key
+secrets.*
+credentials*
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
