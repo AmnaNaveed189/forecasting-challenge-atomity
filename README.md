@@ -102,9 +102,19 @@ Get-FileHash challenge_data\vm_cpu_readings.csv.gz -Algorithm SHA256
 Get-FileHash challenge_data\vm_metadata.csv.gz -Algorithm SHA256
 ```
 
-## Generate predictions
+## Train and run the forecasting pipeline
 
-From the repository root, run:
+The project does not save a separate serialized model file. Training and
+forecasting are performed together by the prediction CLI. Each run:
+
+1. Loads and preprocesses the data;
+2. Builds the aggregate target series;
+3. Uses the first 110 timestamps as the training window;
+4. Fits the configured forecasting rules on that training window;
+5. Forecasts the final 24 timestamps (the two-hour holdout);
+6. Writes and validates `predictions.csv`.
+
+From the repository root on Linux/macOS, run:
 
 ```bash
 python -m cwfc.predict \
@@ -112,7 +122,7 @@ python -m cwfc.predict \
   --output predictions.csv
 ```
 
-On Windows PowerShell:
+On Windows PowerShell, run:
 
 ```powershell
 python -m cwfc.predict `
@@ -127,9 +137,11 @@ The command:
 3. Removes duplicate `(vm_id, timestamp)` observations.
 4. Aggregates the readings by timestamp.
 5. Uses all observations except the final 24 as training data.
-6. Forecasts the final 24 timestamps.
-7. Validates the output schema and value ranges.
-8. Writes `predictions.csv`.
+6. Fits persistence for `active_vm_count`.
+7. Fits damped persistence for `aggregate_cpu_utilization`.
+8. Forecasts the final 24 timestamps.
+9. Validates the output schema and value ranges.
+10. Writes `predictions.csv`.
 
 Expected output:
 
