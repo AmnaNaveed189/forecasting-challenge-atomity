@@ -26,6 +26,9 @@ ENV/
 # Dataset: the upstream Azure release is downloaded, never committed
 challenge_data/
 *.csv.gz
+smoke_data/
+smoke_predictions.csv
+
 
 # Large derived or intermediate files
 *.parquet
